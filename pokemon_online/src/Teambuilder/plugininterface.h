@@ -1,0 +1,55 @@
+#ifndef PLUGININTERFACE_H
+#define PLUGININTERFACE_H
+
+#include <QString>
+
+/* An interface Client Plugins must follow.
+   Remember that plugins are still very experimental and that this file is going to be subject to
+   a lot of changes... */
+
+class QWidget;
+class MainEngineInterface;
+
+class ClientPlugin
+{
+public:
+    /* The name of the option the plugin would take in the menu bar.
+       Also appears as the name of the plugin */
+    virtual QString pluginName() const = 0;
+
+    /* A widget that would be used to configure the plugin in the menu bar.
+       Return NULL if you don't want one (default behavior) */
+    virtual QWidget * getConfigurationWidget() {
+        return NULL;
+    }
+
+    virtual bool hasConfigurationWidget() const {
+        return false;
+    }
+};
+
+/* Each plugin will have to have a function like that named
+   createPluginClass, that creates a ClientPlugin (or a derived
+    class) through new and returns it. */
+typedef ClientPlugin *(*PluginInstanceFunction) (MainEngineInterface*);
+
+/* Will be used like that:
+
+class MyPlugin : public ClientPlugin
+{
+...
+}
+
+extern "C" {
+ClientPlugin *createPluginClass(void);
+};
+
+....
+
+ClientPlugin *createPluginClass() {
+    return new MyPlugin();
+}
+
+*/
+
+#endif // PLUGININTERFACE_H
