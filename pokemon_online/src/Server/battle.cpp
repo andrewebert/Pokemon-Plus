@@ -4986,11 +4986,12 @@ PokeFraction BattleSituation::getStatBoost(int player, int stat)
             if (hasWorkingAbility(attacker, Ability::Unaware) && (stat == SpDefense || stat == Defense || stat == Evasion)) {
                 boost = 0;
             }
-            // Modified: Aerial Ace, Frost Breath, and Storm Throw all ignore enemy defense boosts
+            // Modified: Aerial Ace, Uproar, Frost Breath, and Storm Throw all ignore enemy defense boosts
             else if ((tmove(attacker).attack == Move::PaymentPlan
                       || tmove(attacker).attack == Move:: AerialAce
                       || tmove(attacker).attack == Move:: FreezingBreath
                       || tmove(attacker).attack == Move:: JudoThrow
+                      || tmove(attacker).attack == Move:: Uproar
                       || tmove(attacker).attack == Move::SacredSword)&& (stat == SpDefense || stat == Defense)) {
                 boost = 0;
             }
